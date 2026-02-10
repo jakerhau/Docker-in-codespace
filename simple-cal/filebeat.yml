@@ -1,0 +1,13 @@
+filebeat.inputs:
+  - type: log
+    paths:
+      - /logs/*.log
+
+processors:
+  - add_docker_metadata: ~
+
+output.elasticsearch:
+  hosts: ["https://opensearch:9200"]
+  username: "admin"
+  password: "nobitA@1zz"
+  ssl.verification_mode: none
