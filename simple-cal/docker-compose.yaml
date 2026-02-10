@@ -4,7 +4,7 @@ services:
     image: simple-cal:latest
     build: .
     ports:
-      - "8000:8000"
+      - "8181:8181"
     networks:
       - demo-network
     volumes:
