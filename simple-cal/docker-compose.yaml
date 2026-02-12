@@ -9,48 +9,48 @@ services:
       - demo-network
     volumes:
       - ./logs:/app/logs
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:7.17.0
-    volumes:
-      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - demo-network
-    depends_on:
-      - opensearch
-  opensearch:
-    image: opensearchproject/opensearch:latest
-    environment:
-      - cluster.name=opensearch
-      - node.name=opensearch
-      - discovery.seed_hosts=opensearch
-      - cluster.initial_cluster_manager_nodes=opensearch
-      - bootstrap.memory_lock=true # Disable JVM heap memory swapping
-      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # Set min and max JVM heap sizes to at least 50% of system RAM
-      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=nobitA@1zz
-      - cluster.routing.allocation.disk.threshold_enabled=false
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    ports:
-      - "9200:9200"
-      - "9600:9600"
-    networks:
-      - demo-network
-    volumes:
-      - opensearch-data:/usr/share/opensearch/data
-  opensearchdashboard:
-    image: opensearchproject/opensearch-dashboards:latest
-    ports:
-      - "5601:5601"
-    expose:
-      - "5601"
-    environment:
-      - OPENSEARCH_HOSTS=https://opensearch:9200
-    networks:
-      - demo-network
+  # filebeat:
+  #   image: docker.elastic.co/beats/filebeat:7.17.0
+  #   volumes:
+  #     - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+  #     - /var/lib/docker/containers:/var/lib/docker/containers:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #   networks:
+  #     - demo-network
+  #   depends_on:
+  #     - opensearch
+  # opensearch:
+  #   image: opensearchproject/opensearch:latest
+  #   environment:
+  #     - cluster.name=opensearch
+  #     - node.name=opensearch
+  #     - discovery.seed_hosts=opensearch
+  #     - cluster.initial_cluster_manager_nodes=opensearch
+  #     - bootstrap.memory_lock=true # Disable JVM heap memory swapping
+  #     - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # Set min and max JVM heap sizes to at least 50% of system RAM
+  #     - OPENSEARCH_INITIAL_ADMIN_PASSWORD=nobitA@1zz
+  #     - cluster.routing.allocation.disk.threshold_enabled=false
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   ports:
+  #     - "9200:9200"
+  #     - "9600:9600"
+  #   networks:
+  #     - demo-network
+  #   volumes:
+  #     - opensearch-data:/usr/share/opensearch/data
+  # opensearchdashboard:
+  #   image: opensearchproject/opensearch-dashboards:latest
+  #   ports:
+  #     - "5601:5601"
+  #   expose:
+  #     - "5601"
+  #   environment:
+  #     - OPENSEARCH_HOSTS=https://opensearch:9200
+  #   networks:
+  #     - demo-network
 
 networks:
   demo-network:

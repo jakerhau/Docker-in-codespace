@@ -1,0 +1,14 @@
+services:
+  karaf:
+    image: karaf:4.4.9
+    build: .
+    container_name: karaf
+    ports:
+      - "8181:8181"
+    networks:
+      - simple-network
+  # kafka:
+  # redis: 
+networks:
+  simple-network:
+    driver: bridge

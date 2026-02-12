@@ -13,5 +13,5 @@ COPY --from=builder /root/.m2 /root/.m2
 
 # Copy feature
 COPY --from=builder \
-  /build/simple-cal-feature/target/feature/feature.xml \
-  /opt/apache-karaf/deploy/simple-cal-feature.xml
+  /build/build-feature/target/feature/feature.xml \
+  /opt/apache-karaf/deploy/build-feature.xml
