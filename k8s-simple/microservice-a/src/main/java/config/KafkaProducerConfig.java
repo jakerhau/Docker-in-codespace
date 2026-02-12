@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import org.osgi.service.component.annotations.Component;
 
-@Component
+@Component(service = KafkaProducerConfig.class)
 public class KafkaProducerConfig {
     public Properties getConfig() {
         Properties props = new Properties();

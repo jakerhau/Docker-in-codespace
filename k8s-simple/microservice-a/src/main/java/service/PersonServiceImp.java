@@ -1,6 +1,7 @@
 package service;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import demo.common.dto.PersonDTO;
 import demo.common.events.PersonEvent;
@@ -9,6 +10,7 @@ import producer.PersonEventProducer;
 @Component(service = PersonService.class)
 public class PersonServiceImp implements PersonService {
 
+    @Reference
     private PersonEventProducer producer;
 
     @Override

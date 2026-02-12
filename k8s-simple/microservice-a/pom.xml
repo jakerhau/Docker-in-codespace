@@ -67,6 +67,7 @@
                         <Import-Package>
                             javax.ws.rs.*,
                             com.fasterxml.jackson.jaxrs.*,
+                            org.apache.kafka.common.serialization.*,
                             *
                         </Import-Package>
                     </instructions>
