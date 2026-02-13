@@ -1,4 +1,4 @@
-package service;
+package demo.example.service;
 
 import demo.common.dto.PersonDTO;
 

@@ -9,10 +9,10 @@
         class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider" />
 
     <!-- Reference to PersonService from OSGi registry -->
-    <reference id="personService" interface="service.PersonService" />
+    <reference id="personService" interface="demo.example.service.PersonService" />
 
     <!--Inject Service Bean -->
-    <bean id="personController" class="controller.PersonController">
+    <bean id="personController" class="demo.example.controller.PersonController">
         <property name="personService" ref="personService" />
     </bean>
 

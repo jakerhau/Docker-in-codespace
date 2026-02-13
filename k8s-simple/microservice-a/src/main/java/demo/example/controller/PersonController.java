@@ -1,4 +1,4 @@
-package controller;
+package demo.example.controller;
 
 import java.util.logging.Logger;
 
@@ -14,8 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import demo.common.dto.PersonDTO;
-import service.PersonService;
+import demo.example.service.PersonService;
 
+@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PersonController {
@@ -41,7 +42,6 @@ public class PersonController {
         return null;
     }
 
-
     @POST
     public Response createPerson(PersonDTO personDTO) {
         logger.info("Creating a new person.....");
@@ -59,7 +59,7 @@ public class PersonController {
 
     @DELETE
     @Path("/{id}")
-    public Response deletePerson(@PathParam("id") String id){
+    public Response deletePerson(@PathParam("id") String id) {
         logger.info(() -> "Deleting person with ID: " + id + " .....");
         personService.deletePerson(id);
         return null;

@@ -1,4 +1,4 @@
-package config;
+package demo.example.config;
 
 import java.util.Properties;
 

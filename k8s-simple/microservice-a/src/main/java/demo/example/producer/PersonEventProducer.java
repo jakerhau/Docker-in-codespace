@@ -1,4 +1,4 @@
-package producer;
+package demo.example.producer;
 
 import java.util.logging.Logger;
 
@@ -8,8 +8,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import config.KafkaProducerConfig;
 import demo.common.events.PersonEvent;
+import demo.example.config.KafkaProducerConfig;
 
 @Component(service = PersonEventProducer.class)
 public class PersonEventProducer {

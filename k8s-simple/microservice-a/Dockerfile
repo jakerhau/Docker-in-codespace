@@ -13,5 +13,7 @@ COPY --from=builder /root/.m2 /root/.m2
 
 # Copy feature
 COPY --from=builder \
-  /build/build-feature/target/feature/feature.xml \
-  /opt/apache-karaf/deploy/build-feature.xml
+  /build/microservice-a/target/feature/feature.xml \
+  /opt/apache-karaf/deploy/microservice-a-feature.xml
+
+
