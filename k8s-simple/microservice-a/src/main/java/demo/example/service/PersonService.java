@@ -2,10 +2,12 @@ package demo.example.service;
 
 import demo.common.dto.PersonDTO;
 
-
 public interface PersonService {
-    PersonDTO getPersonById(String id);
-    PersonDTO createPerson(PersonDTO personDTO);
-    PersonDTO updatePerson(String id, PersonDTO personDTO);
+    void getPersonById(String id);
+
+    void createPerson(PersonDTO personDTO);
+
+    void updatePerson(String id, PersonDTO personDTO);
+
     void deletePerson(String id);
 }

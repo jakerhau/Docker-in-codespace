@@ -8,6 +8,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import demo.common.events.PersonEvent;
 import demo.example.config.KafkaProducerConfig;
 
@@ -15,18 +17,33 @@ import demo.example.config.KafkaProducerConfig;
 public class PersonEventProducer {
 
     private static final Logger logger = Logger.getLogger(PersonEventProducer.class.getName());
-    private KafkaProducer<String, PersonEvent> kafkaProducer;
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private KafkaProducer<String, String> kafkaProducer;
 
     @Reference
     private KafkaProducerConfig kafkaConfig;
 
     @Activate
     public void active() {
-        kafkaProducer = new KafkaProducer<>(kafkaConfig.getConfig());
+        try {
+            kafkaProducer = new KafkaProducer<>(kafkaConfig.getConfig());
+        } catch (RuntimeException ex) {
+            logger.severe(() -> "Kafka producer init failed: " + ex.getMessage());
+            kafkaProducer = null;
+        }
     }
 
     public void sendMessage(PersonEvent message) {
-        logger.info(() -> "Sending message: " + message);
-        kafkaProducer.send(new ProducerRecord<>("person-topic", message));
+        if (kafkaProducer == null) {
+            logger.warning("Kafka producer not available; skipping message send.");
+            return;
+        }
+        try {
+            String payload = objectMapper.writeValueAsString(message);
+            logger.info(() -> "Sending message: " + payload);
+            kafkaProducer.send(new ProducerRecord<>("person-topic", payload));
+        } catch (Exception ex) {
+            logger.severe(() -> "Failed to serialize PersonEvent: " + ex.getMessage());
+        }
     }
 }

@@ -14,6 +14,7 @@
         <feature>blueprint-web</feature>
         <feature>scr</feature>
         <feature>cxf-jaxrs</feature>
+        <feature>cxf-jackson</feature>
 
         <bundle>wrap:mvn:org.apache.kafka/kafka-clients/2.8.0</bundle>
         

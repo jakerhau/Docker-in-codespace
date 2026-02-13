@@ -39,14 +39,14 @@ public class PersonController {
     @Path("/{id}")
     public Response getPersonById(@PathParam("id") String id) {
         logger.info(() -> "Getting person by ID: " + id + " .....");
-        return null;
+        return Response.ok().build();
     }
 
     @POST
     public Response createPerson(PersonDTO personDTO) {
         logger.info("Creating a new person.....");
         personService.createPerson(personDTO);
-        return null;
+        return Response.ok().build();
     }
 
     @PUT
@@ -54,7 +54,7 @@ public class PersonController {
     public Response updatePerson(@PathParam("id") String id, PersonDTO personDTO) {
         logger.info(() -> "Updating person with ID: " + id + " .....");
         personService.updatePerson(id, personDTO);
-        return null;
+        return Response.ok().build();
     }
 
     @DELETE
@@ -62,6 +62,6 @@ public class PersonController {
     public Response deletePerson(@PathParam("id") String id) {
         logger.info(() -> "Deleting person with ID: " + id + " .....");
         personService.deletePerson(id);
-        return null;
+        return Response.ok().build();
     }
 }

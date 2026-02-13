@@ -14,28 +14,25 @@ public class PersonServiceImp implements PersonService {
     private PersonEventProducer producer;
 
     @Override
-    public PersonDTO getPersonById(String id) {
-        
-        return null;
+    public void getPersonById(String id) {
+
     }
 
     @Override
-    public PersonDTO createPerson(PersonDTO personDTO) {
+    public void createPerson(PersonDTO personDTO) {
 
         PersonEvent event = new PersonEvent("CREATE", personDTO);
 
         producer.sendMessage(event);
 
-        return null;
     }
 
     @Override
-    public PersonDTO updatePerson(String id, PersonDTO personDTO) {
+    public void updatePerson(String id, PersonDTO personDTO) {
 
         PersonEvent event = new PersonEvent("UPDATE", personDTO);
         producer.sendMessage(event);
 
-        return null;
     }
 
     @Override
