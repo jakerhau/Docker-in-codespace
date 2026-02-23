@@ -31,7 +31,6 @@ public class PersonController {
     @GET
     public Response getAllPersons() {
         logger.info("Getting all persons.....");
-
         return Response.ok().build();
     }
 

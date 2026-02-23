@@ -1,5 +1,6 @@
 package demo.example.producer;
 
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -8,6 +9,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import demo.common.events.PersonEvent;
@@ -41,9 +43,17 @@ public class PersonEventProducer {
         try {
             String payload = objectMapper.writeValueAsString(message);
             logger.info(() -> "Sending message: " + payload);
-            kafkaProducer.send(new ProducerRecord<>("person-topic", payload));
-        } catch (Exception ex) {
+            kafkaProducer.send(new ProducerRecord<>("person-topic", payload), (metadata, ex) -> {
+                if (ex != null) {
+                    logger.severe(() -> "Failed to send message: " + ex.getMessage());
+                } else {
+                    logger.info(() -> "Message sent successfully. Topic: person-topic, Payload: " + payload);
+                }
+            }).get();
+        } catch (JsonProcessingException ex) {
             logger.severe(() -> "Failed to serialize PersonEvent: " + ex.getMessage());
+        } catch (InterruptedException | ExecutionException ex) {
+            logger.severe(() -> "Failed to send Kafka message: " + ex.getMessage());
         }
     }
 }

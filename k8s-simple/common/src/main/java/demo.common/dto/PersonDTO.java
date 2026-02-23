@@ -9,6 +9,11 @@ public class PersonDTO {
     public PersonDTO() {
     }
 
+    public PersonDTO(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
     public PersonDTO(String id, int age, String name) {
         this.id = id;
         this.age = age;
