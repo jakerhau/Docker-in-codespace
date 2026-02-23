@@ -38,11 +38,13 @@ public class PersonEventConsumer {
             
             // Start consumer in a background thread
             running = true;
+            
             consumerThread = new Thread(this::consumeMessages);
             consumerThread.setName("PersonEventConsumer-Thread");
             consumerThread.setDaemon(true);
             consumerThread.start();
             logger.info("Consumer thread started");
+
         } catch (RuntimeException ex) {
             logger.severe(() -> "Kafka consumer init failed: " + ex.getMessage());
             kafkaConsumer = null;
@@ -71,7 +73,6 @@ public class PersonEventConsumer {
         while (running && kafkaConsumer != null) {
             try {
                 ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofSeconds(5));
-                logger.info(() -> "Polled " + records.count() + " records");
                 if (!records.isEmpty()) {
                     records.forEach(record -> {
                         try {

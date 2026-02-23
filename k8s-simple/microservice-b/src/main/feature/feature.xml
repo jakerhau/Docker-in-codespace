@@ -7,7 +7,7 @@
     <repository>
         mvn:org.apache.karaf.features/standard/4.4.4/xml/features
     </repository>
-    
+
     <feature name="microservice-b" version="0.0.1-SNAPSHOT">
 
         <feature>pax-web-http</feature>
@@ -17,7 +17,12 @@
         <feature>cxf-jackson</feature>
 
         <bundle>wrap:mvn:org.apache.kafka/kafka-clients/2.8.0</bundle>
-        
+        <bundle>wrap:mvn:com.google.code.gson/gson/2.10.1</bundle>
+        <bundle>wrap:mvn:org.json/json/20211205</bundle>
+        <bundle>wrap:mvn:org.apache.commons/commons-pool2/2.12.0</bundle>
+        <bundle>wrap:mvn:redis.clients/jedis/4.2.3</bundle>
+
+
         <bundle>mvn:demo/common/0.0.1-SNAPSHOT</bundle>
         <bundle>mvn:demo/microservice-b/0.0.1-SNAPSHOT</bundle>
     </feature>

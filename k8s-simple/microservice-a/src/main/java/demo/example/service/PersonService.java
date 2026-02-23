@@ -1,9 +1,14 @@
 package demo.example.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import demo.common.dto.PersonDTO;
 
 public interface PersonService {
-    void getPersonById(String id);
+    Optional<List<PersonDTO>> getAllPersons();
+    
+    Optional<PersonDTO> getPersonById(String id);
 
     void createPerson(PersonDTO personDTO);
 

@@ -6,6 +6,9 @@ public class PersonEvent {
     private String eventType;
     private PersonDTO person;
 
+    public PersonEvent() {
+    }
+
     public PersonEvent(String eventType, PersonDTO person) {
         this.eventType = eventType;
         this.person = person;

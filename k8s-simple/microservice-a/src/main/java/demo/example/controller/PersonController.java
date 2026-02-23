@@ -1,5 +1,6 @@
 package demo.example.controller;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
@@ -38,7 +39,12 @@ public class PersonController {
     @Path("/{id}")
     public Response getPersonById(@PathParam("id") String id) {
         logger.info(() -> "Getting person by ID: " + id + " .....");
-        return Response.ok().build();
+        Optional<PersonDTO> person = personService.getPersonById(id);
+        if (person.isPresent()) {
+            return Response.ok(person.get()).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @POST
