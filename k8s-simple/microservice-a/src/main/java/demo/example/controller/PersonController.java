@@ -1,5 +1,6 @@
 package demo.example.controller;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -32,7 +33,14 @@ public class PersonController {
     @GET
     public Response getAllPersons() {
         logger.info("Getting all persons.....");
-        return Response.ok().build();
+        Optional<List<PersonDTO>> persons = personService.getAllPersons();
+        if (persons.isPresent()) {
+            return Response.status(Response.Status.OK)
+                    .entity(persons.get())
+                    .build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
     @GET
@@ -41,7 +49,9 @@ public class PersonController {
         logger.info(() -> "Getting person by ID: " + id + " .....");
         Optional<PersonDTO> person = personService.getPersonById(id);
         if (person.isPresent()) {
-            return Response.ok(person.get()).build();
+            return Response.status(Response.Status.OK)
+                    .entity(person.get())
+                    .build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -50,8 +60,10 @@ public class PersonController {
     @POST
     public Response createPerson(PersonDTO personDTO) {
         logger.info("Creating a new person.....");
-        personService.createPerson(personDTO);
-        return Response.ok().build();
+        PersonDTO created = personService.createPerson(personDTO);
+        return Response.status(Response.Status.CREATED)
+                .entity(created)
+                .build();
     }
 
     @PUT
@@ -59,7 +71,8 @@ public class PersonController {
     public Response updatePerson(@PathParam("id") String id, PersonDTO personDTO) {
         logger.info(() -> "Updating person with ID: " + id + " .....");
         personService.updatePerson(id, personDTO);
-        return Response.ok().build();
+        return Response.status(Response.Status.ACCEPTED)
+                .build();
     }
 
     @DELETE
@@ -67,6 +80,7 @@ public class PersonController {
     public Response deletePerson(@PathParam("id") String id) {
         logger.info(() -> "Deleting person with ID: " + id + " .....");
         personService.deletePerson(id);
-        return Response.ok().build();
+        return Response.status(Response.Status.NO_CONTENT)
+                .build();
     }
 }

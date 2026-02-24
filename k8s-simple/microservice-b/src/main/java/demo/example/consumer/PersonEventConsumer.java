@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import demo.common.events.PersonEvent;
 import demo.example.config.PersonKafkaConsumer;
+import demo.example.service.PersonService;
 
 @Component(immediate = true)
 public class PersonEventConsumer {
@@ -28,6 +29,9 @@ public class PersonEventConsumer {
 
     @Reference
     private PersonKafkaConsumer kafkaConfig;
+
+    @Reference
+    private PersonService personService;
 
     @Activate
     public void active() {
@@ -94,19 +98,18 @@ public class PersonEventConsumer {
     private void handlePersonEvent(PersonEvent event) {
         logger.info(() -> "Processing PersonEvent: eventType=" + event.getEventType() + ", person=" + event.getPerson());
         
-        // Handle different event types
         switch (event.getEventType()) {
             case "CREATE":
                 logger.info(() -> "Creating person: " + event.getPerson().getName());
-                // TODO: Save to database
+                personService.handleCreatePerson(event.getPerson());
                 break;
             case "UPDATE":
                 logger.info(() -> "Updating person: " + event.getPerson().getId());
-                // TODO: Update in database
+                personService.handleUpdatePerson(event.getPerson().getId(), event.getPerson());
                 break;
             case "DELETE":
                 logger.info(() -> "Deleting person: " + event.getPerson().getId());
-                // TODO: Delete from database
+                personService.handleDeletePerson(event.getPerson().getId());
                 break;
             default:
                 logger.warning(() -> "Unknown event type: " + event.getEventType());

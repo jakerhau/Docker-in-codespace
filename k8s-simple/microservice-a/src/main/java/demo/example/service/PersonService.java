@@ -10,9 +10,9 @@ public interface PersonService {
     
     Optional<PersonDTO> getPersonById(String id);
 
-    void createPerson(PersonDTO personDTO);
+    PersonDTO createPerson(PersonDTO personDTO);
 
-    void updatePerson(String id, PersonDTO personDTO);
+    PersonDTO updatePerson(String id, PersonDTO personDTO);
 
     void deletePerson(String id);
 }

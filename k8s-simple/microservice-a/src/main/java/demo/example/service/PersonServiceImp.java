@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,7 +46,7 @@ public class PersonServiceImp implements PersonService {
                         }
                     })
                     .filter(person -> person != null)
-                    .toList();
+                    .collect(Collectors.toList());
             return Optional.of(persons);
         } catch (Exception ex) {
             logger.severe(() -> "Error accessing Redis: " + ex.getMessage());
@@ -75,19 +76,20 @@ public class PersonServiceImp implements PersonService {
     }
 
     @Override
-    public void createPerson(PersonDTO personDTO) {
+    public PersonDTO createPerson(PersonDTO personDTO) {
         String id = UUID.randomUUID().toString();
         personDTO.setId(id);
         PersonEvent event = new PersonEvent("CREATE", personDTO);
         producer.sendMessage(event);
+        return personDTO;
     }
 
     @Override
-    public void updatePerson(String id, PersonDTO personDTO) {
+    public PersonDTO updatePerson(String id, PersonDTO personDTO) {
         personDTO.setId(id);
         PersonEvent event = new PersonEvent("UPDATE", personDTO);
         producer.sendMessage(event);
-
+        return personDTO;
     }
 
     @Override
